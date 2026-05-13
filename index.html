@@ -42,7 +42,8 @@
     * {
       box-sizing: border-box;
       margin: 0;
-      padding: 0
+      padding: 0;
+      scroll-behavior: smooth;
     }
 
     html,
@@ -448,7 +449,9 @@
 
     .cover-art {
       aspect-ratio: 1;
-      background: linear-gradient(180deg, #2a1a0f 0%, #0a0604 100%);
+      background-image: url("./img/mirabolante-capa.jpeg");
+      background-position: center;
+      background-size: cover;
       position: relative;
       overflow: hidden;
       display: flex;
@@ -1958,18 +1961,15 @@
       <div class="hero-byline">Ivo Mozart</div>
       <p class="hero-tag">Onde a música nasce antes de virar produto.</p>
       <div class="hero-ctas">
-        <button class="hero-cta primary">▶ Ouvir Mirabolante</button>
+        <a href="#mirabolante"><button class="hero-cta primary"> ▶ Ouvir Acústico</button></a>
         <button class="hero-cta outline">Conhecer a Imersão</button>
       </div>
     </section>
 
     <!-- SINGLE ATUAL -->
-    <section class="single-atual">
+    <section class="single-atual" id="mirabolante">
       <div class="single-wrap">
         <div class="cover-art">
-          <div class="cover-top">Acústico Casa da Canção</div>
-          <div class="cover-title">MIRA<br>BOLANTE</div>
-          <div class="cover-artist">Ivo Mozart</div>
         </div>
         <div class="single-info">
           <span class="pretitle">▶ No ar agora · Single 01</span>
@@ -2230,7 +2230,7 @@
     </section>
 
     <!-- IMERSÃO COMO FUNCIONA -->
-    <section class="imersao" id="imersao">
+    <!-- <section class="imersao" id="imersao">
       <div class="im-inner">
         <div class="im-head">
           <span class="label">Um dia · Casa da Canção</span>
@@ -2247,7 +2247,7 @@
             no repertório.</p>
         </div>
 
-        <!-- Frame de jornada: 4 atos -->
+
         <div class="im-schedule">
           <div class="day">Ato 1</div>
           <div class="slots">
@@ -2312,10 +2312,10 @@
             o cancionismo."</p>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- CASA FÍSICA -->
-    <section class="casa-fisica">
+    <!-- <section class="casa-fisica">
       <div class="cf-inner">
         <div class="cf-grid">
           <div class="cf-img"><span class="cap">"A Casa em Niterói — vista do drone"</span></div>
@@ -2328,7 +2328,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- SWITCH PARA CANCIONISMO -->
     <section class="switch-section">
