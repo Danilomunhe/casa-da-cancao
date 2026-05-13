@@ -1,0 +1,2550 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casa da Canção · Acústico · Ivo Mozart</title>
+  <style>
+    /* ===========================================
+     DUAS IDENTIDADES NO MESMO SITE
+     Modo Casa: cinema/noite · mostarda sobre preto
+     Modo Cancionismo: manifesto/dia · vermelho sobre papel
+     =========================================== */
+    :root {
+      --bg: #0A0604;
+      --ink: #F2EAD8;
+      --ink-dim: #A99F8C;
+      --ink-soft: #6b6355;
+      --mustard: #F5B21E;
+      /* mostarda das capas Mirabolante/Acústico */
+      --mustard-deep: #D49412;
+      --red: #C41E3A;
+      --cream: #EFE5D0;
+      --line: rgba(242, 234, 216, .12);
+      --accent: var(--mustard);
+      --mode: "casa";
+    }
+
+    body.cancionismo {
+      --bg: #EFE5D0;
+      --ink: #1A0A0A;
+      --ink-dim: #5A3A32;
+      --ink-soft: #8a7368;
+      --mustard: #C41E3A;
+      --mustard-deep: #8C1528;
+      --red: #C41E3A;
+      --cream: #EFE5D0;
+      --line: rgba(26, 10, 10, .15);
+      --accent: var(--red);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html,
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Inter", -apple-system, sans-serif;
+      font-weight: 300;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      transition: background .8s ease, color .8s ease
+    }
+
+    .serif {
+      font-family: "Canela", "Freight Big", ui-serif, Georgia, serif
+    }
+
+    .display {
+      font-family: "Oswald", "Bebas Neue", "Arial Narrow", sans-serif;
+      font-weight: 700;
+      letter-spacing: -.02em
+    }
+
+    .script {
+      font-family: "Caveat", "Homemade Apple", "Dancing Script", cursive
+    }
+
+    /* proxy da fonte Ivo Caetano */
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    /* ============ NAV ============ */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(180deg, rgba(10, 6, 4, .9), rgba(10, 6, 4, 0));
+      backdrop-filter: blur(12px);
+      transition: background .8s
+    }
+
+    body.cancionismo header {
+      background: linear-gradient(180deg, rgba(239, 229, 208, .95), rgba(239, 229, 208, .4))
+    }
+
+    /* ── Hambúrguer ── */
+    .menu-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      z-index: 100;
+      position: relative;
+      /* fica fora do nav overlay */
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--ink);
+      border-radius: 2px;
+      transition: transform .35s ease, opacity .25s ease, width .25s ease;
+      transform-origin: center;
+    }
+
+    /* Animação X quando aberto */
+    .menu-toggle.open span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+      width: 0;
+    }
+
+    .menu-toggle.open span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    @media (max-width: 900px) {
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background: rgba(10, 6, 4, 0.98);
+        backdrop-filter: blur(20px);
+        transition: .4s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      nav.active {
+        right: 0;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 28px;
+      }
+
+      nav a {
+        font-size: 14px;
+      }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .logo-sig {
+      font-family: "Oswald", "Bebas Neue", sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      color: var(--accent);
+      letter-spacing: .5px;
+      line-height: 1
+    }
+
+    .logo-sub {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      font-weight: 400
+    }
+
+    nav ul {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center
+    }
+
+    nav a {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--ink);
+      transition: color .3s;
+      cursor: pointer;
+      font-weight: 400
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--accent)
+    }
+
+    .nav-cta {
+      padding: 13px 22px;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all .3s
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .3)
+    }
+
+    /* ============ HERO · ACÚSTICO ============ */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 100px 20px 60px;
+      overflow: hidden;
+      background: var(--bg)
+    }
+
+    /* .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 40%, rgba(245, 178, 30, .08), transparent 60%),
+        linear-gradient(180deg, rgba(10, 6, 4, .65), rgba(10, 6, 4, .85)),
+        linear-gradient(135deg, #2a1a0f 0%, #0a0604 50%, #1a0f08 100%);
+      z-index: 0;
+      overflow: hidden
+    } */
+
+    .hero-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, .015) 0 1px, transparent 1px 3px);
+      opacity: .5;
+      pointer-events: none
+    }
+
+    /* cocar stylized */
+    .hero-bg::after {
+      content: "";
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 380px;
+      height: 380px;
+      background: conic-gradient(from 200deg at 50% 80%, transparent 0deg, rgba(245, 178, 30, .15) 40deg, rgba(245, 178, 30, .35) 60deg, rgba(245, 178, 30, .15) 80deg, transparent 120deg);
+      border-radius: 50%;
+      filter: blur(2px);
+      opacity: .5
+    }
+
+    .hero>* {
+      position: relative;
+      z-index: 2
+    }
+
+    .hero .ep-label {
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--mustard);
+      margin-bottom: 30px;
+      font-weight: 500;
+      opacity: 0;
+    }
+
+    .hero-title {
+      font-family: "Oswald", "Bebas Neue", sans-serif;
+      font-weight: 700;
+      font-size: clamp(80px, 16vw, 100px);
+      line-height: .82;
+      letter-spacing: -.01em;
+      color: var(--mustard);
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 0 4px 40px rgba(0, 0, 0, .5)
+    }
+
+    .hero-title span {
+      display: block
+    }
+
+    .hero-byline {
+      font-size: 12px;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin: 30px 0 40px;
+      font-weight: 400;
+      opacity: 0;
+    }
+
+    .hero-tag {
+      font-family: "Caveat", cursive;
+      font-size: 32px;
+      color: var(--ink-dim);
+      margin-bottom: 40px;
+      font-weight: 400;
+      font-style: italic
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center
+    }
+
+    .hero-cta {
+      padding: 18px 32px;
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .3s;
+      border: none
+    }
+
+    .hero-cta.primary {
+      background: var(--mustard);
+      color: var(--bg)
+    }
+
+    .hero-cta.primary:hover {
+      background: #FFCA3A;
+      transform: translateY(-2px)
+    }
+
+    .hero-cta.outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--ink)
+    }
+
+    .hero-cta.outline:hover {
+      background: var(--ink);
+      color: var(--bg)
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .hero-bg iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 56.25vw;
+      /* 16:9 */
+      min-height: 100vh;
+      min-width: 177.77vh;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* opcional: escurecer o vídeo pra melhorar contraste */
+    .hero-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+
+      background:
+        /* escurecimento */
+        rgba(0, 0, 0, 0.55),
+
+        /* textura */
+        repeating-linear-gradient(0deg,
+          rgba(255, 255, 255, 0.015) 0 1px,
+          transparent 1px 3px),
+
+        /* glow */
+        radial-gradient(ellipse at 50% 40%,
+          rgba(245, 178, 30, .08),
+          transparent 60%);
+    }
+
+    /* ============ SINGLE ATUAL · MIRABOLANTE ============ */
+    .single-atual {
+      padding: 140px 40px;
+      background: #0A0604;
+      border-top: 1px solid var(--line);
+      position: relative;
+      overflow: hidden
+    }
+
+    body.cancionismo .single-atual {
+      background: var(--bg)
+    }
+
+    .single-atual::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(245, 178, 30, .08), transparent 60%);
+      pointer-events: none
+    }
+
+    .single-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      align-items: center;
+      position: relative
+    }
+
+    @media(max-width:900px) {
+      .single-wrap {
+        grid-template-columns: 1fr;
+        gap: 40px
+      }
+    }
+
+    .cover-art {
+      aspect-ratio: 1;
+      background: linear-gradient(180deg, #2a1a0f 0%, #0a0604 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      border: 1px solid var(--line);
+    }
+
+    .cover-art::before {
+      content: "";
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      aspect-ratio: 1;
+      background: conic-gradient(from 210deg at 50% 80%, transparent 0deg, rgba(245, 178, 30, .2) 40deg, rgba(245, 178, 30, .5) 60deg, rgba(245, 178, 30, .2) 80deg, transparent 120deg);
+      border-radius: 50%;
+      filter: blur(1px);
+      opacity: .7
+    }
+
+    .cover-art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 60%, transparent 20%, rgba(10, 6, 4, .85) 80%),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, .02) 0 1px, transparent 1px 3px);
+      pointer-events: none
+    }
+
+    .cover-art .cover-top {
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--mustard);
+      font-weight: 600;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 20px
+    }
+
+    .cover-art .cover-title {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: clamp(56px, 8vw, 92px);
+      line-height: .9;
+      letter-spacing: -.02em;
+      color: var(--mustard);
+      text-align: center;
+      position: relative;
+      z-index: 2
+    }
+
+    .cover-art .cover-artist {
+      font-size: 12px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-weight: 500;
+      position: relative;
+      z-index: 2;
+      margin-top: 24px
+    }
+
+    .single-info .pretitle {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--mustard);
+      margin-bottom: 20px;
+      font-weight: 500
+    }
+
+    .single-info h2 {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: clamp(52px, 7vw, 96px);
+      line-height: .9;
+      color: var(--ink);
+      margin-bottom: 24px;
+      letter-spacing: -.01em
+    }
+
+    .single-info .lede {
+      font-size: 17px;
+      color: var(--ink-dim);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 520px
+    }
+
+    .single-info .meta-row {
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 32px;
+      flex-wrap: wrap
+    }
+
+    .meta-item {
+      flex: 1;
+      min-width: 120px
+    }
+
+    .meta-item .k {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 4px
+    }
+
+    .meta-item .v {
+      font-size: 14px;
+      color: var(--ink);
+      font-weight: 500
+    }
+
+    .listen-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    .listen-btn {
+      padding: 15px 26px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      transition: all .3s;
+      cursor: pointer;
+      background: transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .listen-btn:hover {
+      border-color: var(--mustard);
+      color: var(--mustard)
+    }
+
+    .listen-btn.spotify {
+      background: var(--mustard);
+      color: var(--bg);
+      border-color: var(--mustard)
+    }
+
+    .listen-btn.spotify:hover {
+      background: #FFCA3A;
+      border-color: #FFCA3A;
+      color: var(--bg)
+    }
+
+    /* ============ CAMINHO DO ACÚSTICO · TIMELINE ============ */
+    .timeline {
+      padding: 120px 40px;
+      background: var(--bg);
+      border-top: 1px solid var(--line)
+    }
+
+    .tl-inner {
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .tl-head {
+      text-align: center;
+      margin-bottom: 80px
+    }
+
+    .tl-head .label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-weight: 500
+    }
+
+    .tl-head h2 {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1;
+      letter-spacing: -.01em;
+      max-width: 900px;
+      margin: 0 auto
+    }
+
+    .tl-head h2 em {
+      font-family: "Caveat", cursive;
+      font-weight: 400;
+      color: var(--accent);
+      font-style: normal;
+      font-size: 1.1em;
+      vertical-align: middle
+    }
+
+    .tl-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      position: relative
+    }
+
+    @media(max-width:900px) {
+      .tl-grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    .tl-item {
+      padding: 28px 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .01);
+      position: relative;
+      transition: all .3s;
+      cursor: default;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between
+    }
+
+    .tl-item.done {
+      border-color: var(--mustard);
+      background: rgba(245, 178, 30, .05)
+    }
+
+    .tl-item.now {
+      border-color: var(--mustard);
+      background: rgba(245, 178, 30, .12);
+      box-shadow: 0 0 40px rgba(245, 178, 30, .15)
+    }
+
+    .tl-item.now::before {
+      content: "NO AR";
+      position: absolute;
+      top: -10px;
+      right: 16px;
+      background: var(--mustard);
+      color: var(--bg);
+      font-size: 9px;
+      letter-spacing: 2px;
+      padding: 3px 8px;
+      font-weight: 700
+    }
+
+    .tl-item .when {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 14px
+    }
+
+    .tl-item h4 {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: -.01em;
+      color: var(--ink);
+      margin-bottom: 10px;
+      text-transform: uppercase
+    }
+
+    .tl-item.done h4,
+    .tl-item.now h4 {
+      color: var(--mustard)
+    }
+
+    .tl-item p {
+      font-size: 12px;
+      color: var(--ink-dim);
+      line-height: 1.5
+    }
+
+    /* ============ EDITORA · COMPOSIÇÕES EM DESTAQUE ============ */
+    .editora {
+      padding: 140px 40px;
+      background: #0A0604;
+      border-top: 1px solid var(--line);
+      position: relative;
+      overflow: hidden
+    }
+
+    body.cancionismo .editora {
+      background: var(--bg)
+    }
+
+    .ed-inner {
+      max-width: 1300px;
+      margin: 0 auto
+    }
+
+    .ed-head {
+      text-align: center;
+      margin-bottom: 70px;
+      max-width: 820px;
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    .ed-head .label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--mustard);
+      margin-bottom: 14px;
+      font-weight: 500
+    }
+
+    .ed-head h2 {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: clamp(44px, 6.5vw, 80px);
+      line-height: .95;
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin-bottom: 20px
+    }
+
+    .ed-head h2 em {
+      font-family: "Caveat", cursive;
+      font-weight: 400;
+      color: var(--mustard);
+      font-style: normal;
+      font-size: 1.05em
+    }
+
+    .ed-head p {
+      color: var(--ink-dim);
+      font-size: 16px;
+      line-height: 1.7
+    }
+
+    .ed-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px
+    }
+
+    @media(max-width:1000px) {
+      .ed-grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:640px) {
+      .ed-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .ed-card {
+      background: rgba(255, 255, 255, .02);
+      border: 1px solid var(--line);
+      transition: all .3s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden
+    }
+
+    .ed-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--mustard);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, .4)
+    }
+
+    .ed-thumb {
+      aspect-ratio: 16/9;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .ed-thumb::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, .7))
+    }
+
+    .ed-thumb .yt-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 68px;
+      height: 48px;
+      background: rgba(196, 30, 58, .92);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      transition: all .3s
+    }
+
+    .yt-play img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+
+    .ed-thumb .yt-play::before {
+      content: "";
+      width: 0;
+      height: 0;
+      border-left: 18px solid #fff;
+      border-top: 11px solid transparent;
+      border-bottom: 11px solid transparent;
+      margin-left: 4px
+    }
+
+    .ed-card:hover .yt-play {
+      background: #C41E3A;
+      transform: translate(-50%, -50%) scale(1.1)
+    }
+
+    .ed-thumb .duration {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, .85);
+      color: #fff;
+      font-size: 11px;
+      padding: 3px 6px;
+      font-weight: 600;
+      z-index: 3;
+      border-radius: 3px;
+      font-family: monospace
+    }
+
+    .ed-thumb .views-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(245, 178, 30, .95);
+      color: #0a0604;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      padding: 4px 10px;
+      font-weight: 700;
+      z-index: 3;
+      text-transform: uppercase
+    }
+
+    /* thumbnails coloridas (proxy de capa) */
+    .ed-thumb.t1 {
+      background: url('/img/mirabolante-capa.jpeg') center/cover no-repeat;
+    }
+
+    .ed-thumb.t2 {
+      background: url('/img/vagalumes.jpg') center/cover no-repeat;
+    }
+
+    .ed-thumb.t3 {
+      background: url('/img/amor.jpg') center/cover no-repeat;
+    }
+
+    .ed-thumb.t4 {
+      background: url('/img/cachorrinho.jpg') center/cover no-repeat;
+    }
+
+    .ed-thumb.t5 {
+      background: url('/img/umcentimentro.jpg') center/cover no-repeat;
+    }
+
+    .ed-thumb.t6 {
+      background: linear-gradient(135deg, #2a1a0a 0%, #F27229 50%, #0a0604 100%)
+    }
+
+    .ed-thumb .cover-logo {
+      position: relative;
+      z-index: 2;
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 42px;
+      color: rgba(255, 255, 255, .92);
+      letter-spacing: -.01em;
+      text-align: center;
+      line-height: .9;
+      padding: 0 20px;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, .5)
+    }
+
+    .ed-body {
+      padding: 22px 22px 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px
+    }
+
+    .ed-artist {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--mustard);
+      font-weight: 600
+    }
+
+    .ed-song {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      line-height: 1.1;
+      color: var(--ink);
+      letter-spacing: -.01em;
+      text-transform: uppercase
+    }
+
+    .ed-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      margin-top: 6px;
+      border-top: 1px solid var(--line);
+      font-size: 11px;
+      color: var(--ink-soft);
+      letter-spacing: 1px
+    }
+
+    .ed-meta .plays {
+      color: var(--ink);
+      font-weight: 600
+    }
+
+    .ed-meta .plays .num {
+      color: var(--mustard);
+      font-family: "Oswald", sans-serif;
+      font-size: 18px;
+      letter-spacing: -.01em;
+      margin-right: 4px
+    }
+
+    .ed-footer-note {
+      margin-top: 60px;
+      text-align: center;
+      padding: 40px;
+      border: 1px dashed var(--line);
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    .ed-footer-note p {
+      font-family: "Caveat", cursive;
+      font-size: 24px;
+      color: var(--ink-dim);
+      font-style: italic;
+      line-height: 1.4
+    }
+
+    .ed-footer-note .sig {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-top: 14px;
+      font-family: "Inter", sans-serif;
+      font-style: normal
+    }
+
+    /* ============ KEVINHO · IMERSÃO ============ */
+    .kevinho {
+      padding: 140px 40px;
+      background: #0A0604;
+      border-top: 1px solid var(--line);
+      position: relative;
+      overflow: hidden
+    }
+
+    body.cancionismo .kevinho {
+      background: var(--bg)
+    }
+
+    .kev-inner {
+      max-width: 1300px;
+      margin: 0 auto
+    }
+
+    .kev-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+      gap: 40px;
+      flex-wrap: wrap
+    }
+
+    .kev-head .left {
+      max-width: 720px
+    }
+
+    .kev-head .label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--mustard);
+      margin-bottom: 14px;
+      font-weight: 500
+    }
+
+    .kev-head h2 {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: clamp(44px, 6.5vw, 82px);
+      line-height: .95;
+      color: var(--ink);
+      letter-spacing: -.01em
+    }
+
+    .kev-head h2 em {
+      font-family: "Caveat", cursive;
+      font-weight: 400;
+      color: var(--mustard);
+      font-style: normal
+    }
+
+    .kev-head .right {
+      max-width: 400px;
+      padding-top: 10px
+    }
+
+    .kev-head .right p {
+      color: var(--ink-dim);
+      font-size: 15px;
+      line-height: 1.7
+    }
+
+    .kev-video {
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #1a0f08, #0a0604);
+      border: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .kev-video iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .kev-video::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 60%, rgba(245, 178, 30, .15), transparent 50%),
+        linear-gradient(180deg, rgba(0, 0, 0, .3), rgba(0, 0, 0, .8))
+    }
+
+    .kev-video .play {
+      width: 84px;
+      height: 84px;
+      border: 2px solid var(--mustard);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--mustard);
+      font-size: 26px;
+      position: relative;
+      z-index: 2;
+      background: rgba(10, 6, 4, .5);
+      transition: all .3s
+    }
+
+    .kev-video:hover .play {
+      background: var(--mustard);
+      color: var(--bg);
+      transform: scale(1.08)
+    }
+
+    .kev-video .kev-caption {
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      z-index: 2
+    }
+
+    .kev-video .kev-caption .t {
+      font-family: "Oswald", sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--mustard);
+      letter-spacing: -.01em;
+      text-transform: uppercase
+    }
+
+    .kev-video .kev-caption .s {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--ink-dim);
+      text-transform: uppercase;
+      margin-top: 4px
+    }
+
+    .kev-quote {
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 40px 20px
+    }
+
+    .kev-quote blockquote {
+      font-family: "Canela", serif;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.4;
+      color: var(--ink);
+      margin-bottom: 20px
+    }
+
+    .kev-quote blockquote::before {
+      content: "\201C";
+      font-family: "Canela", serif;
+      font-size: 80px;
+      line-height: .1;
+      color: var(--mustard);
+      display: block;
+      margin-bottom: 30px
+    }
+
+    .kev-quote cite {
+      font-style: normal;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      font-weight: 500
+    }
+
+    /* ============ IMERSÃO · COMO FUNCIONA ============ */
+    .imersao {
+      padding: 140px 40px;
+      background: var(--bg);
+      border-top: 1px solid var(--line)
+    }
+
+    .im-inner {
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .im-head {
+      text-align: center;
+      margin-bottom: 70px;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    .im-head .label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      font-weight: 500
+    }
+
+    .im-head h2 {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: .95;
+      letter-spacing: -.01em;
+      margin-bottom: 24px
+    }
+
+    .im-head p {
+      color: var(--ink-dim);
+      font-size: 16px;
+      line-height: 1.7
+    }
+
+    .im-schedule {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 30px;
+      margin-bottom: 24px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: start
+    }
+
+    @media(max-width:700px) {
+      .im-schedule {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .im-schedule .day {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: -.01em
+    }
+
+    .im-schedule .slots .slot {
+      margin-bottom: 14px
+    }
+
+    .im-schedule .slots .slot:last-child {
+      margin-bottom: 0
+    }
+
+    .im-schedule .slots .time {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      margin-bottom: 4px
+    }
+
+    .im-schedule .slots .what {
+      font-size: 15px;
+      color: var(--ink);
+      font-weight: 400
+    }
+
+    .im-schedule .slots .what strong {
+      color: var(--accent);
+      font-weight: 500
+    }
+
+    .im-price {
+      margin-top: 60px;
+      padding: 48px;
+      border: 1px solid var(--accent);
+      background: rgba(245, 178, 30, .05);
+      text-align: center;
+      position: relative
+    }
+
+    body.cancionismo .im-price {
+      background: rgba(196, 30, 58, .05)
+    }
+
+    .im-price .vagas {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 16px
+    }
+
+    .im-price .valor {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 72px;
+      line-height: 1;
+      color: var(--ink);
+      letter-spacing: -.02em
+    }
+
+    .im-price .valor .cifrao {
+      font-size: .5em;
+      vertical-align: top;
+      color: var(--ink-dim);
+      margin-right: 8px;
+      font-weight: 300
+    }
+
+    .im-price .por {
+      font-size: 12px;
+      color: var(--ink-dim);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 8px;
+      margin-bottom: 30px
+    }
+
+    .im-price .btn-aplicar {
+      display: inline-block;
+      padding: 18px 44px;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .3s
+    }
+
+    .im-price .btn-aplicar:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(245, 178, 30, .25)
+    }
+
+    /* ============ A CASA (DRONE) ============ */
+    .casa-fisica {
+      padding: 140px 40px;
+      background: #0A0604;
+      border-top: 1px solid var(--line)
+    }
+
+    body.cancionismo .casa-fisica {
+      background: var(--bg)
+    }
+
+    .cf-inner {
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .cf-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 60px;
+      align-items: center
+    }
+
+    @media(max-width:900px) {
+      .cf-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .cf-img {
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #4a3a2a, #1a0f08);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: flex-end;
+      padding: 30px
+    }
+
+    .cf-img::before {
+      content: "🏡";
+      position: absolute;
+      font-size: 180px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: .08;
+      filter: sepia(1) saturate(2)
+    }
+
+    .cf-img::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(10, 6, 4, .6) 100%)
+    }
+
+    .cf-img .cap {
+      position: relative;
+      z-index: 2;
+      font-family: "Caveat", cursive;
+      font-size: 22px;
+      color: var(--mustard);
+      font-style: italic
+    }
+
+    .cf-content .label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      font-weight: 500
+    }
+
+    .cf-content h2 {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 60px);
+      line-height: .95;
+      letter-spacing: -.01em;
+      margin-bottom: 24px
+    }
+
+    .cf-content p {
+      color: var(--ink-dim);
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 16px
+    }
+
+    /* ============ CANCIONISMO TOGGLE ============ */
+    .switch-section {
+      padding: 160px 40px;
+      background: linear-gradient(180deg, var(--bg), rgba(196, 30, 58, .08));
+      border-top: 1px solid var(--line);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: background .8s
+    }
+
+    body.cancionismo .switch-section {
+      background: linear-gradient(180deg, var(--bg), rgba(245, 178, 30, .08))
+    }
+
+    .switch-inner {
+      max-width: 800px;
+      margin: 0 auto
+    }
+
+    .switch-label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-weight: 500
+    }
+
+    .switch-title {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: clamp(48px, 8vw, 120px);
+      line-height: .9;
+      letter-spacing: -.02em;
+      color: var(--accent);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      transition: color .8s
+    }
+
+    .switch-sub {
+      font-family: "Caveat", cursive;
+      font-size: 28px;
+      color: var(--ink);
+      margin-bottom: 30px;
+      font-style: italic
+    }
+
+    .switch-desc {
+      color: var(--ink-dim);
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 560px;
+      margin: 0 auto 40px
+    }
+
+    .switch-btn {
+      padding: 22px 48px;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all .3s
+    }
+
+    .switch-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(196, 30, 58, .3)
+    }
+
+    body.cancionismo .switch-btn:hover {
+      box-shadow: 0 10px 40px rgba(245, 178, 30, .3)
+    }
+
+    /* ============ CANCIONISMO CONTENT (visible quando .cancionismo) ============ */
+    .cancion-content {
+      display: none;
+      padding: 100px 40px 60px;
+      background: var(--bg)
+    }
+
+    body.cancionismo .cancion-content {
+      display: block
+    }
+
+    body.cancionismo .casa-content {
+      display: none
+    }
+
+    .cc-inner {
+      max-width: 1000px;
+      margin: 0 auto
+    }
+
+    .cc-quote {
+      font-family: "Canela", "Freight", serif;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1.3;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--ink);
+      margin-bottom: 60px;
+      max-width: 800px
+    }
+
+    .cc-quote::before {
+      content: "\201C";
+      display: block;
+      font-size: 120px;
+      color: var(--red);
+      line-height: .1;
+      margin-bottom: 40px
+    }
+
+    .cc-modules {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 40px
+    }
+
+    @media(max-width:700px) {
+      .cc-modules {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    .cc-mod {
+      padding: 30px 20px;
+      border: 1px solid rgba(26, 10, 10, .15);
+      background: rgba(255, 255, 255, .3);
+      transition: all .3s;
+      cursor: pointer
+    }
+
+    .cc-mod:hover {
+      background: var(--red);
+      color: var(--cream)
+    }
+
+    .cc-mod:hover .cc-mod-letter,
+    .cc-mod:hover .cc-mod-name {
+      color: var(--cream)
+    }
+
+    .cc-mod-letter {
+      font-family: "Canela", serif;
+      font-size: 60px;
+      font-weight: 300;
+      color: var(--red);
+      line-height: .9;
+      margin-bottom: 12px;
+      font-style: italic
+    }
+
+    .cc-mod-name {
+      font-family: "Canela", serif;
+      font-size: 20px;
+      color: var(--ink);
+      font-weight: 400
+    }
+
+    .cc-footer {
+      margin-top: 80px;
+      padding-top: 40px;
+      border-top: 1px solid var(--line);
+      text-align: center
+    }
+
+    .cc-footer p {
+      font-family: "Caveat", cursive;
+      font-size: 26px;
+      color: var(--red);
+      font-style: italic;
+      margin-bottom: 20px
+    }
+
+    .cc-footer a {
+      display: inline-block;
+      padding: 16px 32px;
+      border: 1.5px solid var(--red);
+      color: var(--red);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: all .3s;
+      font-family: "Inter", sans-serif
+    }
+
+    .cc-footer a:hover {
+      background: var(--red);
+      color: var(--cream)
+    }
+
+    /* ============ NEWSLETTER ============ */
+    .newsletter {
+      padding: 140px 40px;
+      border-top: 1px solid var(--line);
+      text-align: center
+    }
+
+    .nl-inner {
+      max-width: 640px;
+      margin: 0 auto
+    }
+
+    .nl-inner .label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-weight: 500
+    }
+
+    .nl-inner h2 {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: clamp(44px, 6vw, 72px);
+      line-height: 1;
+      margin-bottom: 20px;
+      letter-spacing: -.01em
+    }
+
+    .nl-inner p {
+      color: var(--ink-dim);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 32px
+    }
+
+    .nl-form {
+      display: flex;
+      max-width: 480px;
+      margin: 0 auto;
+      border: 1px solid var(--line)
+    }
+
+    .nl-form input {
+      flex: 1;
+      padding: 18px 20px;
+      background: transparent;
+      border: none;
+      color: var(--ink);
+      font-size: 14px;
+      outline: none;
+      font-family: inherit
+    }
+
+    .nl-form input::placeholder {
+      color: var(--ink-soft)
+    }
+
+    .nl-form button {
+      padding: 18px 32px;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-weight: 700;
+      font-family: inherit
+    }
+
+    /* ============ FOOTER ============ */
+    footer {
+      padding: 60px 40px 40px;
+      border-top: 1px solid var(--line)
+    }
+
+    .foot-grid {
+      max-width: 1200px;
+      margin: 0 auto 40px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px
+    }
+
+    @media(max-width:900px) {
+      .foot-grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    .foot-col h5 {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      font-weight: 600
+    }
+
+    .foot-col ul {
+      list-style: none
+    }
+
+    .foot-col li {
+      padding: 5px 0;
+      font-size: 13px;
+      color: var(--ink-dim);
+      cursor: pointer;
+      transition: color .2s
+    }
+
+    .foot-col li:hover {
+      color: var(--ink)
+    }
+
+    .foot-col p {
+      font-size: 13px;
+      color: var(--ink-dim);
+      line-height: 1.7
+    }
+
+    .foot-sig {
+      font-family: "Caveat", cursive;
+      font-size: 32px;
+      color: var(--accent);
+      font-style: italic;
+      margin-bottom: 10px
+    }
+
+    .foot-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--ink-soft);
+      flex-wrap: wrap;
+      gap: 12px
+    }
+
+    /* MODE TOGGLE PILL */
+    .mode-toggle {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 60;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 12px 18px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .3);
+      transition: all .3s
+    }
+
+    .mode-toggle:hover {
+      transform: translateY(-2px)
+    }
+
+    .mode-toggle {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 60;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 12px 18px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .3);
+      transition: all .3s
+    }
+
+    .mode-toggle:hover {
+      transform: translateY(-2px)
+    }
+
+    /* ── Overlay escurece o fundo quando menu aberto ── */
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      background: transparent;
+    }
+
+    .nav-overlay.active {
+      display: block;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 900px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      /* O nav vira o overlay */
+      nav {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(10, 6, 4, 0.97);
+        backdrop-filter: blur(20px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* oculto por padrão: fora da tela + invisível */
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-12px);
+        transition: opacity .35s ease, transform .35s ease;
+        z-index: 90;
+      }
+
+      body.cancionismo nav {
+        background: rgba(239, 229, 208, 0.97);
+      }
+
+      /* Aberto */
+      nav.active {
+        opacity: 1;
+        pointer-events: all;
+        transform: translateY(0);
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 32px;
+        text-align: center;
+      }
+
+      nav ul li a {
+        font-size: 13px;
+        letter-spacing: 4px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <header>
+    <div class="logo">
+      <div class="logo-sig">Casa da Canção</div>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav id="mobileMenu" role="navigation" aria-label="Menu principal">
+      <ul>
+        <li><a class="active" onclick="mode('casa'); closeMenu()">Acústico</a></li>
+        <li><a onclick="closeMenu()">Singles</a></li>
+        <li><a href="#editora" onclick="closeMenu()">Editora</a></li>
+        <li><a href="#imersao" onclick="closeMenu()">Imersão</a></li>
+        <li><a onclick="closeMenu()">A Casa</a></li>
+        <li><a onclick="mode('cancionismo'); closeMenu()">Cancionismo</a></li>
+      </ul>
+    </nav>
+    <button class="nav-cta" onclick="scrollBy({top:3500,behavior:'smooth'})">Aplicar pra Imersão</button>
+  </header>
+
+  <!-- CASA CONTENT -->
+  <div class="casa-content">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg">
+        <iframe src="https://player.vimeo.com/video/1187783151?autoplay=1&muted=1&loop=1&background=1&playsinline=1"
+          frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen>
+        </iframe>
+      </div>
+      <span class="ep-label">Acústico · Ivo Mozart</span>
+      <h1 class="hero-title"><span>Casa da</span><span>Canção</span></h1>
+      <div class="hero-byline">Ivo Mozart</div>
+      <p class="hero-tag">Onde a música nasce antes de virar produto.</p>
+      <div class="hero-ctas">
+        <button class="hero-cta primary">▶ Ouvir Mirabolante</button>
+        <button class="hero-cta outline">Conhecer a Imersão</button>
+      </div>
+    </section>
+
+    <!-- SINGLE ATUAL -->
+    <section class="single-atual">
+      <div class="single-wrap">
+        <div class="cover-art">
+          <div class="cover-top">Acústico Casa da Canção</div>
+          <div class="cover-title">MIRA<br>BOLANTE</div>
+          <div class="cover-artist">Ivo Mozart</div>
+        </div>
+        <div class="single-info">
+          <span class="pretitle">▶ No ar agora · Single 01</span>
+          <h2>MIRABOLANTE</h2>
+          <p class="lede">O primeiro single do Acústico Casa da Canção. Gravado ao vivo no calor da Casa em São Paulo,
+            com
+            a estética visual que carrega um cocar indígena como presença espiritual do disco inteiro.</p>
+          <div class="meta-row">
+            <div class="meta-item">
+              <div class="k">Single</div>
+              <div class="v">01 de 12</div>
+            </div>
+            <div class="meta-item">
+              <div class="k">Formato</div>
+              <div class="v">Acústico ao vivo</div>
+            </div>
+            <div class="meta-item">
+              <div class="k">Estúdio</div>
+              <div class="v">Casa da Canção</div>
+            </div>
+          </div>
+          <div class="listen-row">
+            <button class="listen-btn spotify"> <a
+                href="https://open.spotify.com/intl-pt/album/6yZ1jBaP98aBLGbFlwgPAa?si=irHuOS8GRDa0-yp8tgccoQ">▶
+                Spotify</a></button>
+            <button class="listen-btn"> <a
+                href="https://www.youtube.com/watch?v=A5YYLPi-PPc&list=RDA5YYLPi-PPc&start_radio=1">▶
+                YouTube</a></button>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE DO ACÚSTICO -->
+    <!-- <section class="timeline">
+      <div class="tl-inner">
+        <div class="tl-head">
+          <span class="label">Caminho do acústico</span>
+          <h2>Os singles vêm primeiro. <em>O disco chega depois.</em></h2>
+        </div>
+        <div class="tl-grid">
+          <div class="tl-item now">
+            <div>
+              <div class="when">Abril · 2026</div>
+              <h4>Mirabolante</h4>
+            </div>
+            <p>Single 01. No ar.</p>
+          </div>
+          <div class="tl-item">
+            <div>
+              <div class="when">Maio · 2026</div>
+              <h4>Single 02</h4>
+            </div>
+            <p>A revelar.</p>
+          </div>
+          <div class="tl-item">
+            <div>
+              <div class="when">Junho · 2026</div>
+              <h4>Single 03</h4>
+            </div>
+            <p>A revelar.</p>
+          </div>
+          <div class="tl-item">
+            <div>
+              <div class="when">Julho · 2026</div>
+              <h4>Single 04</h4>
+            </div>
+            <p>A revelar.</p>
+          </div>
+          <div class="tl-item done" style="border-color:var(--mustard-deep)">
+            <div>
+              <div class="when">Agosto · 2026</div>
+              <h4>ÁLBUM</h4>
+            </div>
+            <p>Acústico Casa da Canção · Ivo Mozart. Completo.</p>
+          </div>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- EDITORA · COMPOSIÇÕES EM DESTAQUE -->
+    <section class="editora" id="editora">
+      <div class="ed-inner">
+        <div class="ed-head">
+          <span class="label">Editora · Casa da Canção</span>
+          <h2>As canções que <em>saíram daqui</em><br>e entraram no mundo</h2>
+          <p>A Casa também é editora. Aqui estão as composições que já passaram pelas mãos do Ivo Mozart e viraram
+            canções de artistas mainstream. Cada uma dessas canções começou num caderno, numa conversa, numa sessão —
+            antes de chegar nos milhões de plays.</p>
+        </div>
+
+        <div class="ed-grid">
+
+          <div class="ed-card">
+            <div class="ed-thumb t1">
+              <span class="views-badge">★ Hit</span>
+              <div class="cover-logo">MIRA<br>BOLANTE</div>
+              <a href="https://www.youtube.com/watch?v=A5YYLPi-PPc&list=RDA5YYLPi-PPc&start_radio=1" target="_blank">
+                <div class="yt-play">
+                </div>
+              </a>
+              <span class="duration">3:42</span>
+            </div>
+            <div class="ed-body">
+              <span class="ed-artist">Ivo Mozart</span>
+              <div class="ed-song">Mirabolante</div>
+              <div class="ed-meta">
+                <span>Single · 2026</span>
+                <span class="plays"><span class="num">—</span>no ar</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ed-card">
+            <div class="ed-thumb t2">
+              <span class="views-badge">★ Hit</span>
+              <div class="cover-logo">VAGALUMES</div>
+              <a href="https://www.youtube.com/watch?v=kszkoFI84JU&list=RDkszkoFI84JU&start_radio=1" target="_blank">
+                <div class="yt-play">
+                </div>
+              </a>
+              <span class="duration">2:51</span>
+            </div>
+            <div class="ed-body">
+              <span class="ed-artist">Ivo Mozart</span>
+              <div class="ed-song">Vagalumes</div>
+              <div class="ed-meta">
+                <span>Single · 2012</span>
+                <span class="plays"><span class="num">272</span>M plays</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ed-card">
+            <div class="ed-thumb t3">
+              <span class="views-badge">★ Hit</span>
+              <div class="cover-logo">AMOR SOB MEDIDA</div>
+              <a href="https://www.youtube.com/watch?v=x4pW625MMIo&list=RDx4pW625MMIo&start_radio=1" target="_blank">
+                <div class="yt-play">
+                </div>
+              </a>
+              <span class="duration">3:13</span>
+            </div>
+            <div class="ed-body">
+              <span class="ed-artist">Roupa Nova feat Luan Santana</span>
+              <div class="ed-song">Amor sob medida</div>
+              <div class="ed-meta">
+                <span>Single · 2019</span>
+                <span class="plays"><span class="num">2</span>M plays</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ed-card">
+            <div class="ed-thumb t4">
+              <span class="views-badge">★ Featured</span>
+              <div class="cover-logo">Cachorrinho</div>
+              <a href="https://www.youtube.com/watch?v=HsD034cfhg0&list=RDHsD034cfhg0&start_radio=1" target="_blank">
+                <div class="yt-play">
+                </div>
+              </a>
+              <span class="duration">3:58</span>
+            </div>
+            <div class="ed-body">
+              <span class="ed-artist">Ferrugem</span>
+              <div class="ed-song">Cachorrinho</div>
+              <div class="ed-meta">
+                <span>Single · 2022</span>
+                <span class="plays"><span class="num">14</span>M plays</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ed-card">
+            <div class="ed-thumb t5">
+              <span class="views-badge">★ Featured</span>
+              <div class="cover-logo">Um centímentro</div>
+              <a href="https://www.youtube.com/watch?v=udYfbbpNphQ&list=RDudYfbbpNphQ&start_radio=1" target="_blank">
+                <div class="yt-play">
+                </div>
+              </a>
+              <span class="duration">3:03</span>
+            </div>
+            <div class="ed-body">
+              <span class="ed-artist">Wesley Safadão</span>
+              <div class="ed-song">Um centímentro</div>
+              <div class="ed-meta">
+                <span>Single · 2025</span>
+                <span class="plays"><span class="num">8.1</span>M plays</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ed-card">
+            <div class="ed-thumb t6">
+              <span class="views-badge">★ Parceria</span>
+              <div class="cover-logo">Anjos de plantão</div>
+              <a href="https://www.youtube.com/watch?v=mPYgoiFgZ4k&list=RDmPYgoiFgZ4k&start_radio=1" target="_blank">
+                <div class="yt-play">
+                </div>
+              </a>
+              <span class="duration">3:39</span>
+            </div>
+            <div class="ed-body">
+              <span class="ed-artist">Ivo Mozart Feat Doncesão</span>
+              <div class="ed-song">ANjos de platão</div>
+              <div class="ed-meta">
+                <span>Single · 2013</span>
+                <span class="plays"><span class="num">38</span>M plays</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- <div class="ed-footer-note">
+          <p>"A Casa não é só um disco. É uma editora viva, com canções caminhando em vários artistas. Quem compõe aqui,
+            compõe pra ficar."</p>
+          <div class="sig">— editora · casa da canção</div>
+        </div> -->
+      </div>
+    </section>
+
+    <!-- KEVINHO IMERSÃO -->
+    <section class="kevinho">
+      <div class="kev-inner">
+        <div class="kev-head">
+          <div class="left">
+            <span class="label">Já aconteceu</span>
+            <h2>Kevinho entrou na Casa<br>e <em>saiu com uma canção</em></h2>
+          </div>
+          <div class="right">
+            <p>A Imersão de Composição já foi testada. O Kevinho entrou na Casa com o Ivo e saiu com uma canção — e
+              mais: com um framework pra enxergar a própria obra. Esse é o modelo que agora abre pra 8 pessoas por mês.
+            </p>
+          </div>
+        </div>
+
+        <div class="kev-video">
+          <iframe
+            src="https://player.vimeo.com/video/1186966865?autoplay=1&muted=1&loop=1&controls=1&title=0&byline=0&portrait=0"
+            frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+          </iframe>
+          <div class="kev-caption">
+            <div class="t">Imersão · Kevinho</div>
+            <div class="s">Niterói · 2026 · documentário</div>
+          </div>
+        </div>
+
+        <div class="kev-quote">
+          <blockquote>
+            A canção não é um produto que você entrega. É um gesto que você compartilha. E quando duas pessoas se sentam
+            pra escutar antes de cantar, a canção aparece.
+          </blockquote>
+          <cite>— Ivo Mozart · sobre a imersão</cite>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMERSÃO COMO FUNCIONA -->
+    <section class="imersao" id="imersao">
+      <div class="im-inner">
+        <div class="im-head">
+          <span class="label">Um dia · Casa da Canção</span>
+          <h2>Imersão de Composição<br>com Ivo Mozart</h2>
+          <p style="margin-bottom:18px"><strong style="color:var(--ink);font-weight:500">Uma experiência para artistas,
+              compositores e entusiastas</strong> que querem viver — por um dia — como um artista e compositor
+            mainstream vive. Conectar. Aprender sobre mercado, futuro e um novo ponto de vista: o framework <strong
+              style="color:var(--accent)">SOM da Manifestação</strong>.</p>
+          <p>Cada pessoa se apresenta e compartilha sua maior dor. O Ivo faz <em
+              style="color:var(--accent);font-style:normal;font-weight:500">mini-diagnósticos SOM ao vivo</em> para
+            alguns — um gosto do que o Diagnóstico SOM completo pode desbloquear. E então chega a hora: <strong
+              style="color:var(--ink);font-weight:500">o briefing é o próximo disco da Casa da Canção</strong> — o álbum
+            que vai dar o tiro de largada do movimento Cancionismo. As canções escritas aqui têm chance real de entrar
+            no repertório.</p>
+        </div>
+
+        <!-- Frame de jornada: 4 atos -->
+        <div class="im-schedule">
+          <div class="day">Ato 1</div>
+          <div class="slots">
+            <div class="slot">
+              <div class="time">09h — 10h30 · Chegada & Roda</div>
+              <div class="what"><strong>Conexão</strong> · café na varanda da Casa · cada um se apresenta: quem você é,
+                o que você faz, o que você quer compor</div>
+            </div>
+          </div>
+        </div>
+        <div class="im-schedule">
+          <div class="day">Ato 2</div>
+          <div class="slots">
+            <div class="slot">
+              <div class="time">10h30 — 12h30 · Aula-conversa</div>
+              <div class="what"><strong>Mercado, futuro e SOM da Manifestação</strong> · Ivo apresenta o framework das 7
+                notas — como a obra de um artista mainstream se constrói, sustenta e vibra no mercado · ponto de vista
+                inédito</div>
+            </div>
+            <div class="slot">
+              <div class="time">12h30 — 14h · Almoço na Casa</div>
+              <div class="what">Mesa posta · conversa franca sobre carreira, bastidores, escolhas</div>
+            </div>
+          </div>
+        </div>
+        <div class="im-schedule">
+          <div class="day">Ato 3</div>
+          <div class="slots">
+            <div class="slot">
+              <div class="time">14h — 16h · Dor & Diagnóstico</div>
+              <div class="what"><strong>Cada participante compartilha sua maior dor</strong> artística/criativa · Ivo
+                escolhe alguns e faz um <strong>mini-Diagnóstico SOM ao vivo</strong> — identifica a nota fraca, a nota
+                dominante e o que está calado · abre o apetite pelo Diagnóstico SOM completo</div>
+            </div>
+          </div>
+        </div>
+        <div class="im-schedule">
+          <div class="day">Ato 4</div>
+          <div class="slots">
+            <div class="slot">
+              <div class="time">16h — 20h · Composição coletiva</div>
+              <div class="what"><strong>O briefing: o próximo disco da Casa da Canção</strong> · todos compõem juntos,
+                conduzidos pelo Ivo · melodias, letras, estruturas · as canções daqui têm chance real de entrar no
+                repertório do álbum que abre o Cancionismo</div>
+            </div>
+            <div class="slot">
+              <div class="time">20h — 22h · Escuta & Show</div>
+              <div class="what"><strong>Jantar coletivo · escuta das demos do dia · show acústico privado do
+                  Ivo</strong> · encerramento: "nós somos o cancionismo"</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="im-price">
+          <div class="vagas">8 vagas · 1x por mês · por curadoria</div>
+          <div class="valor"><span class="cifrao">R$</span>5.000</div>
+          <div class="por">por pessoa · um dia completo · créditos na canção se entrar no disco</div>
+          <a class="btn-aplicar">Aplicar para a próxima edição</a>
+          <p
+            style="margin-top:28px;font-family:'Caveat',cursive;font-size:24px;color:var(--ink-dim);font-style:italic;line-height:1.4;max-width:600px;margin-left:auto;margin-right:auto">
+            "Um dia de composição com Ivo Mozart na Casa da Canção, compondo para um movimento que é de todos. Nós somos
+            o cancionismo."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASA FÍSICA -->
+    <section class="casa-fisica">
+      <div class="cf-inner">
+        <div class="cf-grid">
+          <div class="cf-img"><span class="cap">"A Casa em Niterói — vista do drone"</span></div>
+          <div class="cf-content">
+            <span class="label">A Casa</span>
+            <h2>O lugar onde a canção mora</h2>
+            <p>Niterói, Rio de Janeiro. Uma casa-estúdio com piano, pátio, cocar, livros e silêncio. Aqui vivem o
+              Acústico, as Imersões e, em breve, as rodas do Cancionismo.</p>
+            <p>A Casa não é cenário. É personagem.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SWITCH PARA CANCIONISMO -->
+    <section class="switch-section">
+      <div class="switch-inner">
+        <span class="switch-label">O propósito da Casa</span>
+        <h2 class="switch-title">Cancionismo</h2>
+        <p class="switch-sub">A alma é o comando.</p>
+        <p class="switch-desc">O Acústico é o disco. O Cancionismo é o movimento. Um é a voz do Ivo hoje. O outro é o
+          chamado pra que outras vozes se juntem. Clique pra entrar no território do movimento — e veja o site mudar de
+          pele.</p>
+        <button class="switch-btn" onclick="mode('cancionismo')">Entrar no Cancionismo →</button>
+      </div>
+    </section>
+
+  </div>
+  <!-- /CASA CONTENT -->
+
+  <!-- CANCIONISMO CONTENT -->
+  <div class="cancion-content">
+    <section style="padding:160px 40px 40px;text-align:center">
+      <div class="cc-inner">
+        <span
+          style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--red);font-weight:600">Movimento
+          · desde 28 Jul 2026</span>
+        <h1 class="display"
+          style="font-family:Canela,serif;font-weight:200;font-size:clamp(60px,11vw,160px);line-height:.9;color:var(--red);margin:24px 0;letter-spacing:-2px;font-style:italic">
+          Cancionismo</h1>
+        <p class="script" style="font-size:32px;color:var(--ink);font-style:italic">a alma é o comando.</p>
+      </div>
+    </section>
+
+    <section style="padding:60px 40px">
+      <div class="cc-inner">
+        <blockquote class="cc-quote">
+          A canção é um ato humano de primeira ordem — um gesto da alma que usa a voz, o corpo e a palavra pra dizer o
+          indizível. Cancionismo é a resposta de uma geração que viveu o excesso de automação e decidiu voltar a compor
+          como quem respira.
+        </blockquote>
+
+        <div
+          style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:20px;font-weight:600">
+          Free Music A–Z · 9 módulos vivos</div>
+        <div class="cc-modules">
+          <div class="cc-mod">
+            <div class="cc-mod-letter">A</div>
+            <div class="cc-mod-name">O Chamado</div>
+          </div>
+          <div class="cc-mod">
+            <div class="cc-mod-letter">B</div>
+            <div class="cc-mod-name">A Alma é o Comando</div>
+          </div>
+          <div class="cc-mod">
+            <div class="cc-mod-letter">C</div>
+            <div class="cc-mod-name">Fantasma na Máquina</div>
+          </div>
+          <div class="cc-mod">
+            <div class="cc-mod-letter">D</div>
+            <div class="cc-mod-name">Canção como Manifesto</div>
+          </div>
+          <div class="cc-mod">
+            <div class="cc-mod-letter">E</div>
+            <div class="cc-mod-name">O Corpo que Canta</div>
+          </div>
+          <div class="cc-mod">
+            <div class="cc-mod-letter">F</div>
+            <div class="cc-mod-name">Verso Livre</div>
+          </div>
+          <div class="cc-mod">
+            <div class="cc-mod-letter">G</div>
+            <div class="cc-mod-name">A Matéria do Som</div>
+          </div>
+          <div class="cc-mod">
+            <div class="cc-mod-letter">H</div>
+            <div class="cc-mod-name">Comunidade em Roda</div>
+          </div>
+          <div class="cc-mod">
+            <div class="cc-mod-letter">I</div>
+            <div class="cc-mod-name">O Disco Que Virá</div>
+          </div>
+        </div>
+
+        <div class="cc-footer">
+          <p>Este movimento nasce livre. Sem paywall. Sempre.</p>
+          <a onclick="mode('casa')">← Voltar para o Acústico</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <div class="nl-inner">
+      <span class="label">Carta Mensal</span>
+      <h2>Frequência</h2>
+      <p>Uma carta por mês, assinada pelo Ivo. Reflexão, trechos inéditos, convites pras rodas e pras imersões. Sem
+        funil, só canção.</p>
+      <form class="nl-form" onsubmit="event.preventDefault();this.querySelector('button').textContent='Chegou'">
+        <input type="email" placeholder="seu e-mail" required>
+        <button type="submit">Assinar</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-sig">Casa da Canção</div>
+        <p>Selo, editora e abrigo de canções honestas. Niterói, Brasil. Casa da Canção é uma empresa do grupo DeCastro.
+        </p>
+        <p style="margin-top:12px;font-style:italic;color:var(--ink-soft)">Tipografia oficial: Ivo Caetano — inspirada
+          na caligrafia manuscrita do pai de Ivo Mozart.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Música & Editora</h5>
+        <ul>
+          <li>Mirabolante (no ar)</li>
+          <li>Próximos singles</li>
+          <li>Acústico (Ago/2026)</li>
+          <li>Editora · canções no mundo</li>
+          <li>Spotify · YouTube</li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Cancionismo</h5>
+        <ul>
+          <li>Manifesto</li>
+          <li>9 Módulos</li>
+          <li>Rodas</li>
+          <li>Assinar o movimento</li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Imersão</h5>
+        <ul>
+          <li>Como funciona</li>
+          <li>Aplicar</li>
+          <li>Próximas edições</li>
+          <li>Caso Kevinho</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Casa da Canção · DeCastro</span>
+      <span>casadacancao.com · @casadacancao · ivomozart.com</span>
+    </div>
+  </footer>
+
+  <!-- FLOATING MODE TOGGLE -->
+  <button class="mode-toggle" onclick="toggleMode()">
+    <span id="mode-label">→ Cancionismo</span>
+  </button>
+
+  <script>
+    function mode(m) {
+      if (m === 'cancionismo') {
+        document.body.classList.add('cancionismo');
+        document.getElementById('mode-label').textContent = '← Acústico';
+      } else {
+        document.body.classList.remove('cancionismo');
+        document.getElementById('mode-label').textContent = '→ Cancionismo';
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    }
+    function toggleMode() {
+      mode(document.body.classList.contains('cancionismo') ? 'casa' : 'cancionismo');
+    }
+    /* ── Hambúrguer ── */
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const navOverlay = document.getElementById('navOverlay');
+
+    function toggleMenu() {
+      const isOpen = mobileMenu.classList.toggle('active');
+      menuToggle.classList.toggle('open', isOpen);
+      navOverlay.classList.toggle('active', isOpen);
+      menuToggle.setAttribute('aria-expanded', isOpen);
+      // Impede scroll do body enquanto menu está aberto
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    function closeMenu() {
+      mobileMenu.classList.remove('active');
+      menuToggle.classList.remove('open');
+      navOverlay.classList.remove('active');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    // Fechar com ESC
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeMenu();
+    });
+  </script>
+</body>
+
+</html>
