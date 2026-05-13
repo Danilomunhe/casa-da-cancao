@@ -270,7 +270,7 @@
       inset: 0;
       background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, .015) 0 1px, transparent 1px 3px);
       opacity: .5;
-      pointer-events: none
+      pointer-events: none;
     }
 
     /* cocar stylized */
@@ -395,35 +395,15 @@
       left: 50%;
       width: 100vw;
       height: 56.25vw;
-      /* 16:9 */
+
       min-height: 100vh;
       min-width: 177.77vh;
       transform: translate(-50%, -50%);
-      pointer-events: none;
+
       z-index: 0;
     }
 
-    /* opcional: escurecer o vídeo pra melhorar contraste */
-    .hero-bg::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 1;
 
-      background:
-        /* escurecimento */
-        rgba(0, 0, 0, 0.55),
-
-        /* textura */
-        repeating-linear-gradient(0deg,
-          rgba(255, 255, 255, 0.015) 0 1px,
-          transparent 1px 3px),
-
-        /* glow */
-        radial-gradient(ellipse at 50% 40%,
-          rgba(245, 178, 30, .08),
-          transparent 60%);
-    }
 
     /* ============ SINGLE ATUAL · MIRABOLANTE ============ */
     .single-atual {
@@ -1969,8 +1949,8 @@
     <!-- HERO -->
     <section class="hero">
       <div class="hero-bg">
-        <iframe src="https://player.vimeo.com/video/1187783151?autoplay=1&muted=1&loop=1&background=1&playsinline=1"
-          frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen>
+        <iframe src="https://player.vimeo.com/video/1187783151?autoplay=1&muted=1&loop=1&background=1" width="640"
+          height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen>
         </iframe>
       </div>
       <span class="ep-label">Acústico · Ivo Mozart</span>
